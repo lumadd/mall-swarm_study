@@ -37,6 +37,9 @@ public class BrandController {
 
     @PostMapping("/create")
     public ResponseEntity<Brand> createBrand(@RequestBody CreateBrandRequest request) {
+        if (StringUtils.isEmpty(request.getName())) {
+            return ResponseEntity.badRequest().build();
+        }
         Long uuid = UUID.randomUUID().getMostSignificantBits();
         Brand brand = new Brand();
         brand.setId(uuid);
