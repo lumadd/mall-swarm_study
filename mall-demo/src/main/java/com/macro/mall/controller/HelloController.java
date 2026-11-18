@@ -11,7 +11,7 @@ import java.util.Map;
 @Controller
 public class HelloController {
 
-    @Value(value = "spring.application.name")
+    @Value("${spring.application.name}")
     private String name;
 
     @GetMapping("/hello")
