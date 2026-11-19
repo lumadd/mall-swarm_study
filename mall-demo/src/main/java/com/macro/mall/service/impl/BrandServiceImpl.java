@@ -1,11 +1,12 @@
 package com.macro.mall.service.impl;
 
+import com.macro.mall.mapper.BrandMapper;
 import com.macro.mall.model.Brand;
 import com.macro.mall.service.BrandService;
+import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,17 +14,13 @@ import java.util.List;
 @Service
 public class BrandServiceImpl implements BrandService {
 
+    @Resource
+    private BrandMapper brandMapper;
+
     private static final HashMap<Long, Brand> map = new HashMap<>();
 
     public List<Brand> getBrands() {
-        if (map.isEmpty()) {
-            return new ArrayList<>(0);
-        }
-        List<Brand> brands = new ArrayList<>();
-        map.keySet().forEach(key -> {
-            brands.add(map.get(key));
-        });
-        return brands;
+        return brandMapper.selectAll();
     }
 
     public Brand getBrand(Long id) {
@@ -31,10 +28,7 @@ public class BrandServiceImpl implements BrandService {
             log.info("id is null");
             return null;
         }
-        if (map.containsKey(id)) {
-            return map.get(id);
-        }
-        return null;
+        return brandMapper.selectByPrimaryKey(id);
     }
 
 
@@ -48,14 +42,7 @@ public class BrandServiceImpl implements BrandService {
     }
 
     public List<Brand> getBrandsByName(String name) {
-        List<Brand> brands = new ArrayList<>(0);
-        map.keySet().forEach(key -> {
-            Brand brand = map.get(key);
-            if (brand.getName().contains(name)) {
-                brands.add(brand);
-            }
-        });
-        return brands;
+        return brandMapper.selectAllByName(name);
     }
 
 }

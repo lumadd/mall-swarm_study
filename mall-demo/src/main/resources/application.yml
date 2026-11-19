@@ -3,3 +3,13 @@ server:
 spring:
   application:
     name: mall-demo
+  datasource:
+    url: jdbc:mysql://43.142.117.5:3306/mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
+    username: root
+    password: 5656
+mybatis:
+  mapper-locations:
+    - classpath:mapper/*.xml
+    - classpath*:com/**/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

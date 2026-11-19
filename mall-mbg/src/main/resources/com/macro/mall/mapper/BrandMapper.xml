@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.macro.mall.mapper.BrandMapper">
+    <resultMap id="Brand" type="com.macro.mall.model.Brand">
+        <result column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+    </resultMap>
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="Brand">
+        SELECT *
+        FROM pms_brand
+        where id = #{id,jdbcType=BIGINT};
+    </select>
+
+    <select id="selectAll" resultMap="Brand">
+        select *
+        from pms_brand
+        order by id;
+    </select>
+
+    <select id="selectAllByName" parameterType="java.lang.String" resultMap="Brand">
+        select * from pms_brand
+        <where>
+            <if test="name != null and name != ''">
+                name like CONCAT('%', #{name,jdbcType=VARCHAR}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>
