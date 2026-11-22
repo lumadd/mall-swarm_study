@@ -3,21 +3,20 @@ package com.macro.mall.service.impl;
 import com.macro.mall.mapper.BrandMapper;
 import com.macro.mall.model.Brand;
 import com.macro.mall.service.BrandService;
-import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
 @Service
 public class BrandServiceImpl implements BrandService {
 
-    @Resource
-    private BrandMapper brandMapper;
+    private final BrandMapper brandMapper;
 
-    private static final HashMap<Long, Brand> map = new HashMap<>();
+    public BrandServiceImpl(BrandMapper brandMapper) {
+        this.brandMapper = brandMapper;
+    }
 
     public List<Brand> getBrands() {
         return brandMapper.selectAll();
@@ -33,16 +32,28 @@ public class BrandServiceImpl implements BrandService {
 
 
     public void save(Brand brand) {
-        if (brand == null || brand.getId() == null) {
+        if (brand == null) {
             log.info("brand is null");
             return;
         }
 
-        map.put(brand.getId(), brand);
+        if (brandMapper.insertBrand(brand) > 0) {
+            log.info("save brand success");
+        } else {
+            log.info("save brand failure");
+        }
     }
 
     public List<Brand> getBrandsByName(String name) {
         return brandMapper.selectAllByName(name);
+    }
+
+    public int updateBrand(Brand brand) {
+        return brandMapper.update(brand);
+    }
+
+    public int deleteBrand(Long id) {
+        return brandMapper.deleteBrand(id);
     }
 
 }

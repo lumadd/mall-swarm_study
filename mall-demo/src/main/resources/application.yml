@@ -13,3 +13,4 @@ mybatis:
     - classpath*:com/**/mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    use-generated-keys: true

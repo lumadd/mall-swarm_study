@@ -26,4 +26,19 @@
             </if>
         </where>
     </select>
+
+    <insert id="insertBrand" parameterType="com.macro.mall.model.Brand"
+            useGeneratedKeys="true" keyColumn="id" keyProperty="id">
+        insert into pms_brand (name) value (#{name,jdbcType=VARCHAR})
+    </insert>
+
+    <update id="update" parameterType="com.macro.mall.model.Brand">
+        update pms_brand
+        set name = #{name,jdbcType=VARCHAR}
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <delete id="deleteBrand" parameterType="java.lang.Long">
+        delete pms_brand where id = #{id,jdbcType=BIGINT}
+    </delete>
 </mapper>

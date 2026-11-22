@@ -13,4 +13,8 @@ public interface BrandService {
     void save(Brand brand);
 
     List<Brand> getBrandsByName(String name);
+
+    int updateBrand(Brand brand);
+
+    int deleteBrand(Long id);
 }

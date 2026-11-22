@@ -14,4 +14,9 @@ public interface BrandMapper {
 
     List<Brand> selectAllByName(String name);
 
+    int insertBrand(Brand brand);
+
+    int update(Brand brand);
+
+    int deleteBrand(Long id);
 }
