@@ -51,21 +51,28 @@ public class BrandController {
     @PostMapping("/update/{id}")
     public ResponseEntity<Brand> updateBrand(@PathVariable() Long id, @RequestBody CreateBrandRequest request) {
         Brand brand = brandService.getBrand(id);
-        if (brand == null || brand.getId() == null || request == null || StringUtils.isBlank(request.getName())) {
+        if (brand == null || brand.getId() == null) {
             return ResponseEntity.notFound().build();
         }
+        if (request == null || StringUtils.isBlank(request.getName())) {
+            return ResponseEntity.badRequest().build();
+        }
         brand.setName(request.getName());
-        brandService.updateBrand(brand);
-        return ResponseEntity.ok(brandService.getBrand(id));
+        if (brandService.updateBrand(brand) == 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(brand);
     }
 
-    @GetMapping("/delete/{id}")
-    public ResponseEntity<Null> deleteBrand(@PathVariable Long id) {
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteBrand(@PathVariable Long id) {
         Brand brand = brandService.getBrand(id);
         if (brand == null || brand.getId() == null) {
             return ResponseEntity.notFound().build();
         }
-        brandService.deleteBrand(id);
+        if (brandService.deleteBrand(id) == 0) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok(null);
     }
 }

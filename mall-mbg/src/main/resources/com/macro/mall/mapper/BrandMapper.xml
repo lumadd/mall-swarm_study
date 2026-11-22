@@ -39,6 +39,6 @@
     </update>
 
     <delete id="deleteBrand" parameterType="java.lang.Long">
-        delete pms_brand where id = #{id,jdbcType=BIGINT}
+        delete from pms_brand where id = #{id,jdbcType=BIGINT}
     </delete>
 </mapper>
